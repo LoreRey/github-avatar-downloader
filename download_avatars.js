@@ -3,7 +3,7 @@ var secrets = require('./secrets.js');
 var fs = require('fs');
 
 function getRepoContributors(repoOwner, repoName, cb) {
-  var options = {
+    var options = {
     url: "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/contributors",
     headers: {
       'User-Agent': 'request',
@@ -15,15 +15,16 @@ function getRepoContributors(repoOwner, repoName, cb) {
     cb(err, body);
   });
 }
+
 console.log('Welcome to the GitHub Avatar Downloader!');
 
 getRepoContributors(process.argv[2], process.argv[3], function(err, result) {
-  if(process.argv[2] === undefined || process.argv[3] === undefined) {
+    if(process.argv[2] === undefined || process.argv[3] === undefined) {
     console.log("Error");
   } else {
-  var parse = JSON.parse(result);
-  parse.forEach(function(obj) {
-  downloadImageURL(obj.avatar_url, obj.id)
+    var parse = JSON.parse(result);
+    parse.forEach(function(obj) {
+    downloadImageURL(obj.avatar_url, obj.id)
 });
 }
 // console.log("Errors:", err);
