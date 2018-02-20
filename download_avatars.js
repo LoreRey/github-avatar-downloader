@@ -1,5 +1,6 @@
 var request = require('request');
 var secrets = require('./secrets.js');
+var fs = require('fs');
 
 function getRepoContributors(repoOwner, repoName, cb) {
   var options = {
@@ -23,5 +24,19 @@ getRepoContributors("jquery", "jquery", function(err, result) {
 });
 // console.log("Errors:", err);
  //console.log("Result:", result);
+
+function downloadImageURL(url, filePath) {
+  request.get(url, filePath)
+         .on('error', function(err) {
+          throw err;
+         })
+         .on('response', function (response) {
+         console.log('Response Status Code: ', response.statusCode);
+         console.log('Response content-type: ', response.headers['content-type']);
+         })
+         .pipe(fs.createWriteStream("./avatars.jpg"));
+}
+  downloadImageURL("https://avatars2.githubusercontent.com/u/2741?v=3&s=466", "avatars/kvirani.jpg")
+
 });
 
